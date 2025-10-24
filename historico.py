@@ -1,4 +1,3 @@
-
 import datetime
 
 class Historico:
@@ -12,4 +11,3 @@ class Historico:
     for t in self.transacoes:
       print('-', t)
     print('-----------------------------------')
-     

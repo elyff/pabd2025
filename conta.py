@@ -1,39 +1,39 @@
 from historico import Historico
+from functools import reduce
 
 class Conta:
-    def __init__(self, cliente, agencia, numero, pix, saldo):
-        self.cliente = cliente
-        self.agencia = agencia
-        self.numero = numero
-        self.pix = pix
-        self.saldo = saldo
-    
-    def deposita(self, valor):
-        self.saldo += valor
 
-    def saca(self, valor):
-        if(self.saldo < valor):
-            return False
-        else:
-            self.saldo -= valor
-            return True
-    
-    def extrato(self):
-        print(f'Titular: {self.cliente.nome}\nCPF: {self.cliente.cpf}\nAgência: {self.agencia}\nNúmero: {self.numero}\nPIX: {self.pix}\nSaldo: {self.saldo:.2f}\n')
+	# Atributo de classe
+	_total_contas = 0
+	_lista_contas = []
 
-    def transfere(self, destino, valor):
-        if(self.saca(valor)):
-            destino.deposita(valor)
-            return True
-        else:
-            return False
+	# Métodos estáticos
+	@staticmethod
+	def total_contas():
+		return Conta._total_contas
+
+	@staticmethod
+	def lista_contas():
+		return Conta._lista_contas
+
+	@staticmethod
+	def get_saldo_total():
+		return reduce(lambda soma, conta: soma + conta.saldo, Conta._lista_contas, 0)
+
+	# Métodos de classe
+	@classmethod
+	def total_contas_cm(cls):
+		return cls._total_contas
+
 	def __init__(self, cliente, agencia, numero, pix, saldo):
-        self.cliente = cliente # agregação
+		self.cliente = cliente # agregação
 		self.agencia = agencia
 		self.numero = numero
 		self.pix = pix
 		self._saldo = saldo
 		self.historico = Historico() # composição
+		Conta._total_contas += 1
+		Conta._lista_contas.append(self)
 
 	## Decorator - property
 	@property
@@ -81,11 +81,11 @@ class Conta:
 		)
 
 	def transfere(self, destino, valor):
-	self.historico.transacoes.append(
+		self.historico.transacoes.append(
 			f"❗ Transferência para {destino.cliente.nome}"
 		)
-	if self.saca(valor):
-		destino.deposita(valor)
+		if self.saca(valor):
+			destino.deposita(valor)
 			return True
 		else:
 			return False
