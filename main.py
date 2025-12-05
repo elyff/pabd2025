@@ -13,8 +13,13 @@ for funcionario in funcionario_dao.read_all():
 # Criando DAO para acessar a tabela departamento
 departamento_dao = DepartamentoDAO(client)
 
+
+# Read All
 for departamento in departamento_dao.read_all():
     print(departamento)
+
+# Read 
+f = funcionario_dao.read('cpf', '11122233344')
 
 
 

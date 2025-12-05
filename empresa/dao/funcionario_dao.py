@@ -1,6 +1,6 @@
 import sqlite3
-from base_dao import BaseDAO
-from models import Funcionario
+from empresa.dao.base_dao import BaseDAO
+from empresa.models.funcionario import Funcionario
 
 class FuncionarioDAO(BaseDAO):
     def __init__(self, db):
