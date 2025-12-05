@@ -20,7 +20,10 @@ print("-----Departamentos-----")
 departamento_dao = DepartamentoDAO(client)
 
 for departamento in departamento_dao.read_all():
-    print(departamento)
+    print(departamento) 
+
+f = funcionario_dao.read('cpf', '111.222.333-44')
+print("-----Funcionario lido-----")
 
 '''
 # Lendo apenas um departamento
